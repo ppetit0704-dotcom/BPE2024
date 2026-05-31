@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentation — Tableau de bord BPE 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bleu:       #0a2a4a;
+    --bleu-mid:   #0489B1;
+    --bleu-light: #e8f4fb;
+    --orange:     #e07b1a;
+    --vert:       #2a7a4b;
+    --vert-light: #e8f5ee;
+    --gris:       #f5f6f8;
+    --gris-mid:   #d0d5dc;
+    --texte:      #1a1f2e;
+    --blanc:      #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    color: var(--texte);
+    background: var(--blanc);
+    line-height: 1.75;
+    font-size: 1rem;
+  }
+
+  /* ── NAV LATÉRALE ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px; height: 100vh;
+    background: var(--bleu);
+    padding: 2rem 1.5rem;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  nav .nav-brand {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+
+  nav .nav-version {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.5rem;
+  }
+
+  nav a {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--blanc);
+    background: rgba(255,255,255,0.08);
+  }
+
+  nav .nav-section {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 1rem 0.75rem 0.3rem;
+  }
+
+  /* ── MAIN ── */
+  main {
+    margin-left: 260px;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--bleu) 0%, #1a4a7a 60%, #0489B1 100%);
+    padding: 5rem 4rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(4,137,177,0.15);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 30%;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: rgba(224,123,26,0.1);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    border: 1px solid rgba(224,123,26,0.4);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--blanc);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.05rem;
+    max-width: 600px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-meta-item {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-meta-item strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--blanc);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 600;
+  }
+
+  /* ── SECTIONS ── */
+  .content {
+    padding: 0 4rem 4rem;
+  }
+
+  section {
+    padding-top: 3.5rem;
+    border-top: 1px solid var(--gris-mid);
+    margin-top: 3.5rem;
+  }
+
+  section:first-of-type {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 3.5rem;
+  }
+
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bleu-mid);
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--bleu);
+    margin-bottom: 1.2rem;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--bleu);
+    margin: 2rem 0 0.75rem;
+    padding-left: 0.8rem;
+    border-left: 3px solid var(--orange);
+  }
+
+  h4 {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--bleu-mid);
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  ul, ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  li { margin-bottom: 0.4rem; }
+
+  /* ── BLOCS SPÉCIAUX ── */
+  .info-box {
+    background: var(--bleu-light);
+    border-left: 4px solid var(--bleu-mid);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1.5rem 0;
+    font-size: 0.93rem;
+  }
+
+  .warn-box {
+    background: #fff8ee;
+    border-left: 4px solid var(--orange);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1.5rem 0;
+    font-size: 0.93rem;
+  }
+
+  .success-box {
+    background: var(--vert-light);
+    border-left: 4px solid var(--vert);
+    padding: 1rem 1.25rem;
+    border-radius: 0 6px 6px 0;
+    margin: 1.5rem 0;
+    font-size: 0.93rem;
+  }
+
+  /* ── CODE ── */
+  code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.82rem;
+    background: var(--gris);
+    padding: 0.15em 0.45em;
+    border-radius: 3px;
+    color: #c0392b;
+  }
+
+  pre {
+    background: #1e2533;
+    color: #cdd6f4;
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    font-size: 0.83rem;
+    line-height: 1.6;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  /* ── TABLEAU ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background: var(--bleu);
+    color: var(--blanc);
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.65rem 1rem;
+    text-align: left;
+  }
+
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--gris-mid);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: var(--gris); }
+
+  /* ── CARDS MODULES ── */
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+  }
+
+  .module-card {
+    border: 1px solid var(--gris-mid);
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .module-card:hover {
+    box-shadow: 0 4px 16px rgba(10,42,74,0.1);
+    border-color: var(--bleu-mid);
+  }
+
+  .module-card .mc-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .module-card .mc-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--bleu);
+    margin-bottom: 0.4rem;
+  }
+
+  .module-card .mc-path {
+    font-family: monospace;
+    font-size: 0.72rem;
+    color: var(--bleu-mid);
+    background: var(--bleu-light);
+    padding: 0.2em 0.5em;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 0.6rem;
+  }
+
+  .module-card p {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0;
+  }
+
+  /* ── FLUX UTILISATEUR ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 1.5rem 0;
+  }
+
+  .flow-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .flow-step-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--bleu);
+    color: var(--blanc);
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 0.15rem;
+  }
+
+  .flow-step-content {
+    padding-bottom: 1.5rem;
+    border-left: 2px solid var(--gris-mid);
+    padding-left: 1rem;
+    margin-left: -1rem;
+    flex: 1;
+  }
+
+  .flow-step:last-child .flow-step-content { border-left-color: transparent; }
+
+  .flow-step-content strong {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--bleu);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .flow-step-content p {
+    font-size: 0.88rem;
+    color: #555;
+    margin: 0;
+  }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.2em 0.6em;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-opt  { background: #eee; color: #555; }
+  .badge-req  { background: #fde8d8; color: #c0392b; }
+  .badge-api  { background: #dbeafe; color: #1e40af; }
+  .badge-new  { background: #d1fae5; color: #065f46; }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-left: 260px;
+    background: var(--bleu);
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+    padding: 2rem;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+  }
+
+  footer a { color: var(--orange); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    main, footer { margin-left: 0; }
+    .hero { padding: 3rem 2rem 2.5rem; }
+    .content { padding: 0 2rem 3rem; }
+    .hero h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     NAVIGATION LATÉRALE
+════════════════════════════════════════ -->
+<nav>
+  <div class="nav-brand">Tableau de bord BPE</div>
+  <div class="nav-version">Version 1.0.0 · Millésime 2026</div>
+
+  <span class="nav-section">Présentation</span>
+  <a href="#intro">Introduction</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#modules">Modules</a>
+
+  <span class="nav-section">Guide utilisateur</span>
+  <a href="#installation">Installation</a>
+  <a href="#demarrage">Démarrage</a>
+  <a href="#import-bpe">Import BPE</a>
+  <a href="#selection">Sélection territoire</a>
+  <a href="#zonages">Zonages INSEE</a>
+  <a href="#signalement">Signalement BPE</a>
+
+  <span class="nav-section">Documentation technique</span>
+  <a href="#structure">Structure des fichiers</a>
+  <a href="#donnees">Sources de données</a>
+  <a href="#api">API geo.api.gouv.fr</a>
+  <a href="#session">Session state</a>
+  <a href="#pyinstaller">PyInstaller</a>
+
+  <span class="nav-section">Référence</span>
+  <a href="#colonnes">Colonnes BPE</a>
+  <a href="#faq">FAQ</a>
+</nav>
+
+<!-- ════════════════════════════════════════
+     CONTENU PRINCIPAL
+════════════════════════════════════════ -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Documentation officielle</div>
+  <h1>Tableau de bord<br>Base Permanente des Équipements</h1>
+  <p>Application Streamlit d'exploration et d'analyse de la BPE millésime 2026, enrichie des zonages INSEE et d'un module de signalement d'anomalies.</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">Auteur<strong>Philippe PETIT</strong></div>
+    <div class="hero-meta-item">Version<strong>1.0.0</strong></div>
+    <div class="hero-meta-item">Millésime<strong>BPE 2026</strong></div>
+    <div class="hero-meta-item">Licence<strong>Usage interne</strong></div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ══ INTRODUCTION ══ -->
+<section id="intro">
+  <div class="section-label">Présentation</div>
+  <h2>Introduction</h2>
+  <p>Le <strong>Tableau de bord BPE</strong> est une application Streamlit permettant d'explorer la Base Permanente des Équipements (BPE) publiée chaque année par l'INSEE. Elle s'adresse aussi bien aux <strong>élus et techniciens territoriaux</strong> souhaitant consulter les équipements de leur commune ou intercommunalité, qu'aux <strong>développeurs</strong> souhaitant l'adapter ou l'enrichir.</p>
+
+  <p>L'application offre :</p>
+  <ul>
+    <li>La consultation des équipements par <strong>commune</strong> ou par <strong>EPCI</strong></li>
+    <li>L'enrichissement contextuel via les <strong>zonages INSEE</strong> (Unités urbaines, Bassins de vie, Aires d'attraction des villes)</li>
+    <li>Un <strong>module de signalement d'anomalies BPE</strong> générant un PDF et un email pré-rempli</li>
+    <li>La récupération automatique du <strong>nom de l'EPCI</strong> via l'API geo.api.gouv.fr</li>
+  </ul>
+
+  <div class="info-box">
+    <strong>Source des données :</strong> La BPE est produite annuellement par l'INSEE et mise à disposition en open data sur <a href="https://www.data.gouv.fr" target="_blank">data.gouv.fr</a>. Le millésime 2026 couvre l'ensemble du territoire métropolitain et des DOM.
+  </div>
+</section>
+
+<!-- ══ ARCHITECTURE ══ -->
+<section id="architecture">
+  <div class="section-label">Présentation</div>
+  <h2>Architecture générale</h2>
+  <p>L'application suit une architecture modulaire : chaque fonctionnalité majeure est isolée dans son propre module Python, importé dans le point d'entrée <code>app.py</code>. La communication entre modules s'effectue exclusivement via <code>st.session_state</code>.</p>
+
+  <pre><code>BPE2026/
+├── app.py                          # Point d'entrée principal
+├── assets/
+│   └── logo.png                    # Logo affiché dans le header
+├── ui/
+│   └── cards.py                    # Composants badge (badgeBlue, badgeGreen…)
+└── Datas/
+    ├── Lire_BPE.py                 # Import et lecture du fichier CSV BPE
+    ├── Lire_Datas_csv.py           # Sélecteur générique (hérité)
+    ├── affiche_selecteur_bpe_2.py  # Sélecteur territoire (Commune / EPCI)
+    ├── bpe_signalement.py          # Formulaire signalement anomalie BPE
+    └── Lire_Zonages_INSEE.py       # Import zonages optionnels INSEE</code></pre>
+</section>
+
+<!-- ══ MODULES ══ -->
+<section id="modules">
+  <div class="section-label">Présentation</div>
+  <h2>Modules</h2>
+  <div class="module-grid">
+
+    <div class="module-card">
+      <div class="mc-icon">📥</div>
+      <div class="mc-title">Lire_BPE.py</div>
+      <div class="mc-path">Datas/Lire_BPE.py</div>
+      <p>Chargement et validation du fichier CSV BPE. Expose la fonction <code>lire_bpe()</code> qui retourne un DataFrame pandas.</p>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-icon">🔍</div>
+      <div class="mc-title">affiche_selecteur_bpe_2.py</div>
+      <div class="mc-path">Datas/affiche_selecteur_bpe_2.py</div>
+      <p>Sélecteur de territoire (Commune ou EPCI) avec filtres DOM/SDOM/TYPEQU. Expose <code>affiche_selecteur_bpe()</code>, <code>DOM</code>, <code>SDOM</code>, <code>TYPEQU</code>.</p>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-icon">🗂️</div>
+      <div class="mc-title">Lire_Zonages_INSEE.py</div>
+      <div class="mc-path">Datas/Lire_Zonages_INSEE.py</div>
+      <p>Chargement optionnel des trois fichiers de zonage INSEE (UU2020, BV2022, AAV2020). Expose <code>afficher_import_zonages()</code> et plusieurs helpers.</p>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-icon">📋</div>
+      <div class="mc-title">bpe_signalement.py</div>
+      <div class="mc-path">Datas/bpe_signalement.py</div>
+      <p>Formulaire de signalement d'anomalie BPE. Génère un PDF ReportLab et un lien <code>mailto:</code> pré-rempli. Expose <code>afficher_formulaire_bpe()</code>.</p>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-icon">🃏</div>
+      <div class="mc-title">cards.py</div>
+      <div class="mc-path">ui/cards.py</div>
+      <p>Composants visuels de type badge coloré (<code>badge</code>, <code>badgeBlue</code>, <code>badgeGreen</code>, <code>badgeRed</code>) utilisés dans l'interface.</p>
+    </div>
+
+    <div class="module-card">
+      <div class="mc-icon">🚀</div>
+      <div class="mc-title">app.py</div>
+      <div class="mc-path">app.py</div>
+      <p>Point d'entrée. Orchestre la sidebar, le routage des pages, l'affichage des résultats et l'appel à l'API geo.api.gouv.fr pour les EPCI.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ INSTALLATION ══ -->
+<section id="installation">
+  <div class="section-label">Guide utilisateur</div>
+  <h2>Installation</h2>
+
+  <h3>Prérequis</h3>
+  <ul>
+    <li>Python 3.10 ou supérieur</li>
+    <li>pip (gestionnaire de paquets Python)</li>
+    <li>Connexion Internet (pour l'API geo.api.gouv.fr, facultative)</li>
+  </ul>
+
+  <h3>Dépendances Python</h3>
+  <pre><code>pip install streamlit pandas requests reportlab</code></pre>
+
+  <table>
+    <thead><tr><th>Paquet</th><th>Usage</th><th>Obligatoire</th></tr></thead>
+    <tbody>
+      <tr><td><code>streamlit</code></td><td>Framework de l'application</td><td>✅ Oui</td></tr>
+      <tr><td><code>pandas</code></td><td>Manipulation des données CSV</td><td>✅ Oui</td></tr>
+      <tr><td><code>requests</code></td><td>Appel API geo.api.gouv.fr</td><td>✅ Oui</td></tr>
+      <tr><td><code>reportlab</code></td><td>Génération des PDF de signalement</td><td>✅ Oui</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ DÉMARRAGE ══ -->
+<section id="demarrage">
+  <div class="section-label">Guide utilisateur</div>
+  <h2>Démarrage de l'application</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-step-num">1</div>
+      <div class="flow-step-content">
+        <strong>Ouvrir un terminal dans le dossier du projet</strong>
+        <p>Naviguer jusqu'au répertoire <code>BPE2026/</code> contenant <code>app.py</code>.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">2</div>
+      <div class="flow-step-content">
+        <strong>Lancer Streamlit</strong>
+        <p><code>streamlit run app.py</code></p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">3</div>
+      <div class="flow-step-content">
+        <strong>Ouvrir le navigateur</strong>
+        <p>L'application s'ouvre automatiquement sur <code>http://localhost:8501</code>.</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-step-num">4</div>
+      <div class="flow-step-content">
+        <strong>Importer le fichier BPE</strong>
+        <p>Utiliser le panneau latéral gauche, section <em>Import des données</em>.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <strong>Version standalone (PyInstaller) :</strong> Si l'application est distribuée sous forme d'exécutable <code>.exe</code>, double-cliquer sur l'exécutable. Un onglet navigateur s'ouvre automatiquement. Voir la section <a href="#pyinstaller">PyInstaller</a> pour les détails techniques.
+  </div>
+</section>
+
+<!-- ══ IMPORT BPE ══ -->
+<section id="import-bpe">
+  <div class="section-label">Guide utilisateur</div>
+  <h2>Import du fichier BPE</h2>
+
+  <p>La BPE est distribuée par l'INSEE sous forme de fichier CSV zippé. Après décompression, le fichier se nomme généralement <code>bpe26_ensemble.csv</code>.</p>
+
+  <h3>Téléchargement</h3>
+  <p>Un lien de téléchargement direct depuis <strong>data.gouv.fr</strong> est disponible dans la barre latérale de l'application. Cliquer sur <em>🗺️ Télécharger les données depuis data.gouv.fr</em>.</p>
+
+  <h3>Import dans l'application</h3>
+  <ol>
+    <li>Dans la sidebar, cliquer sur <strong>📁 Import des données</strong> pour déplier le panneau</li>
+    <li>Glisser-déposer le fichier CSV ou cliquer sur <em>Browse files</em></li>
+    <li>Une fois chargé, le sélecteur de territoire apparaît automatiquement</li>
+  </ol>
+
+  <div class="info-box">
+    Le fichier BPE complet (France entière) pèse environ <strong>150 Mo</strong>. Le chargement peut prendre quelques secondes selon la machine. Le DataFrame est mis en cache dans <code>st.session_state["df"]</code> pour éviter les rechargements.
+  </div>
+
+  <h3>Format attendu</h3>
+  <table>
+    <thead><tr><th>Colonne</th><th>Description</th><th>Exemple</th></tr></thead>
+    <tbody>
+      <tr><td><code>AN</code></td><td>Millésime</td><td>2026</td></tr>
+      <tr><td><code>DEPCOM</code></td><td>Code commune INSEE (5 car.)</td><td>30258</td></tr>
+      <tr><td><code>LIBCOM</code></td><td>Libellé commune</td><td>Nîmes</td></tr>
+      <tr><td><code>EPCI</code></td><td>Code EPCI (9 car.)</td><td>200053767</td></tr>
+      <tr><td><code>DOM</code></td><td>Domaine d'équipement</td><td>A</td></tr>
+      <tr><td><code>SDOM</code></td><td>Sous-domaine</td><td>A1</td></tr>
+      <tr><td><code>TYPEQU</code></td><td>Type d'équipement</td><td>A101</td></tr>
+      <tr><td><code>NOMRS</code></td><td>Nom de l'équipement</td><td>École Jean Moulin</td></tr>
+      <tr><td><code>LONGITUDE</code></td><td>Longitude WGS84</td><td>4.3601</td></tr>
+      <tr><td><code>LATITUDE</code></td><td>Latitude WGS84</td><td>43.8367</td></tr>
+      <tr><td><code>BV2022</code></td><td>Code bassin de vie 2022</td><td>30189</td></tr>
+      <tr><td><code>AAV2020</code></td><td>Code aire d'attraction 2020</td><td>003</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ SÉLECTION ══ -->
+<section id="selection">
+  <div class="section-label">Guide utilisateur</div>
+  <h2>Sélection du territoire</h2>
+
+  <p>Après import, le sélecteur de territoire s'affiche dans la sidebar sous <strong>🔍 Sélectionnez votre territoire…</strong></p>
+
+  <h3>Mode Commune</h3>
+  <ol>
+    <li>Choisir <em>Commune</em> dans le sélecteur de mode</li>
+    <li>Saisir ou sélectionner le département, puis la commune</li>
+    <li>Sélectionner optionnellement le domaine et le type d'équipement</li>
+    <li>Les résultats s'affichent dans la zone principale, organisés par DOM → SDOM</li>
+  </ol>
+
+  <h3>Mode EPCI</h3>
+  <ol>
+    <li>Choisir <em>EPCI</em> dans le sélecteur de mode</li>
+    <li>Saisir le code EPCI (9 chiffres) ou le sélectionner dans la liste</li>
+    <li>L'application interroge automatiquement <strong>geo.api.gouv.fr</strong> pour afficher le nom officiel de l'intercommunalité</li>
+    <li>Le nombre de communes couvertes est indiqué dans le sous-titre</li>
+  </ol>
+
+  <div class="success-box">
+    <strong>Astuce :</strong> En mode EPCI, les blocs de zonages INSEE (Unités urbaines, Bassins de vie, Aires d'attraction) listent les zonages distincts présents dans l'EPCI avec la liste des communes appartenant à chacun — particulièrement utile pour les intercommunalités à cheval sur plusieurs bassins.
+  </div>
+</section>
+
+<!-- ══ ZONAGES ══ -->
+<section id="zonages">
+  <div class="section-label">Guide utilisateur</div>
+  <h2>Zonages INSEE optionnels</h2>
+
+  <p>L'application peut être enrichie avec trois fichiers de zonage INSEE téléchargeables gratuitement. Ces fichiers sont <strong>facultatifs</strong> — l'application fonctionne sans eux.</p>
+
+  <table>
+    <thead><tr><th>Zonage</th><th>Fichier source</th><th>Clé de jointure</th><th>URL INSEE</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>🏙️ Unités urbaines 2020</td>
+        <td><code>UU2020_au_01-01-2024.csv</code></td>
+        <td><code>CODGEO</code> ↔ <code>DEPCOM</code></td>
+        <td><a href="https://www.insee.fr/fr/information/4803954" target="_blank">insee.fr</a></td>
+      </tr>
+      <tr>
+        <td>🌿 Bassins de vie 2022</td>
+        <td><code>BV2022.csv</code></td>
+        <td><code>BV2022</code> ↔ <code>BV2022</code> (BPE)</td>
+        <td><a href="https://www.insee.fr/fr/information/6676988" target="_blank">insee.fr</a></td>
+      </tr>
+      <tr>
+        <td>🔵 Aires d'attraction 2020</td>
+        <td><code>AAV2020.csv</code></td>
+        <td><code>AAV2020</code> ↔ <code>AAV2020</code> (BPE)</td>
+        <td><a href="https://www.insee.fr/fr/information/4803954" target="_blank">insee.fr</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Import dans l'application</h3>
+  <ol>
+    <li>Dans la sidebar, déplier <strong>🗂️ Zonages INSEE optionnels</strong></li>
+    <li>Charger chaque fichier CSV individuellement via le file uploader correspondant</li>
+    <li>Un indicateur vert confirme le chargement et le nombre de lignes</li>
+    <li>Les informations de zonage apparaissent automatiquement sous le compteur d'équipements</li>
+  </ol>
+
+  <div class="warn-box">
+    <strong>Note sur les colonnes :</strong> Les fichiers INSEE utilisent le séparateur <code>;</code> (point-virgule). Le module <code>Lire_Zonages_INSEE.py</code> normalise automatiquement les codes communes sur 5 caractères avec zéro initial.
+  </div>
+</section>
+
+<!-- ══ SIGNALEMENT ══ -->
+<section id="signalement">
+  <div class="section-label">Guide utilisateur</div>
+  <h2>Signalement d'anomalie BPE</h2>
+
+  <p>La BPE présente parfois des décalages par rapport à la réalité du terrain — équipements manquants, fermés ou mal géolocalisés. Le module de signalement permet de générer un courrier officiel de demande de mise à jour.</p>
+
+  <h3>Accès au formulaire</h3>
+  <p>Cliquer sur le bouton <strong>📋 Signaler une anomalie BPE</strong> en bas de la barre latérale. Un bouton <em>← Retour à la consultation</em> permet de revenir à la vue principale.</p>
+
+  <h3>Remplissage</h3>
+  <p>Le formulaire est organisé en 4 sections :</p>
+  <ol>
+    <li><strong>Émetteur</strong> — Commune, code INSEE, contact, email, téléphone</li>
+    <li><strong>Équipement concerné</strong> — Nom, adresse, catégorie BPE, type, année de mise en service</li>
+    <li><strong>Description de l'anomalie</strong> — Description libre + justificatifs disponibles</li>
+    <li><strong>Destinataire</strong> — INSEE, INJEP/RES (équipements sportifs), ou DR INSEE régionale</li>
+  </ol>
+
+  <div class="info-box">
+    <strong>Suggestion automatique du destinataire :</strong> Si la catégorie sélectionnée est <em>Sport</em>, le formulaire suggère automatiquement l'INJEP/RES comme destinataire, conformément au circuit de mise à jour officiel.
+  </div>
+
+  <h3>Sorties générées</h3>
+  <ul>
+    <li><strong>PDF téléchargeable</strong> — Courrier officiel mis en page, prêt à être joint à un email ou imprimé</li>
+    <li><strong>Email pré-rempli</strong> — Lien <code>mailto:</code> ouvrant la messagerie par défaut avec objet et corps structurés</li>
+  </ul>
+</section>
+
+<!-- ══ STRUCTURE ══ -->
+<section id="structure">
+  <div class="section-label">Documentation technique</div>
+  <h2>Structure des fichiers</h2>
+
+  <pre><code>BPE2026/
+├── app.py
+│   ├── get_nom_epci(code_epci)     → str
+│   ├── afficher_header()           → None
+│   └── afficher_page_sortie()      → None (+ os._exit)
+│
+├── Datas/
+│   ├── Lire_BPE.py
+│   │   └── lire_bpe()              → pd.DataFrame | None
+│   │
+│   ├── affiche_selecteur_bpe_2.py
+│   │   ├── affiche_selecteur_bpe(df) → pd.DataFrame | None
+│   │   ├── DOM                     dict {code: libellé}
+│   │   ├── SDOM                    dict {code: libellé}
+│   │   └── TYPEQU                  dict {code: libellé}
+│   │
+│   ├── Lire_Zonages_INSEE.py
+│   │   ├── afficher_import_zonages() → None (widget sidebar)
+│   │   ├── get_zonage_commune(depcom) → dict
+│   │   ├── get_infos_bassin(code_bv)  → dict | None
+│   │   ├── get_infos_aire(code_aa)    → dict | None
+│   │   └── zonages_charges()          → list[str]
+│   │
+│   └── bpe_signalement.py
+│       ├── afficher_formulaire_bpe() → None
+│       ├── generer_pdf(data)          → BytesIO
+│       └── generer_mailto(data, info) → str
+│
+└── ui/
+    └── cards.py
+        ├── badge(text, color)
+        ├── badgeBlue(text)
+        ├── badgeGreen(text)
+        └── badgeRed(text)</code></pre>
+</section>
+
+<!-- ══ DONNÉES ══ -->
+<section id="donnees">
+  <div class="section-label">Documentation technique</div>
+  <h2>Sources de données</h2>
+
+  <table>
+    <thead><tr><th>Source</th><th>Producteur</th><th>Fréquence</th><th>Format</th><th>Licence</th></tr></thead>
+    <tbody>
+      <tr><td>Base Permanente des Équipements (BPE)</td><td>INSEE</td><td>Annuelle</td><td>CSV (sep. <code>;</code>)</td><td>Open data (Etalab 2.0)</td></tr>
+      <tr><td>Unités urbaines 2020</td><td>INSEE</td><td>Décennale</td><td>CSV (sep. <code>;</code>)</td><td>Open data (Etalab 2.0)</td></tr>
+      <tr><td>Bassins de vie 2022</td><td>INSEE</td><td>Périodique</td><td>CSV (sep. <code>;</code>)</td><td>Open data (Etalab 2.0)</td></tr>
+      <tr><td>Aires d'attraction des villes 2020</td><td>INSEE</td><td>Décennale</td><td>CSV (sep. <code>;</code>)</td><td>Open data (Etalab 2.0)</td></tr>
+      <tr><td>API Géo (EPCI)</td><td>Etalab / DINUM</td><td>Temps réel</td><td>JSON (REST)</td><td>Open data (Etalab 2.0)</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ API ══ -->
+<section id="api">
+  <div class="section-label">Documentation technique</div>
+  <h2>API geo.api.gouv.fr</h2>
+
+  <p>L'application interroge l'API Géo d'Etalab pour résoudre le nom officiel d'un EPCI à partir de son code. Cette API est gratuite, sans clé d'authentification, et maintenue par la DINUM.</p>
+
+  <h3>Endpoint utilisé</h3>
+  <pre><code>GET https://geo.api.gouv.fr/epcis/{code_epci}
+
+# Exemple
+GET https://geo.api.gouv.fr/epcis/200053767
+
+# Réponse
+{
+  "code": "200053767",
+  "nom": "Nîmes Métropole",
+  "type": "CA",
+  "populationTotale": 254582
+}</code></pre>
+
+  <h3>Gestion du cache et des erreurs</h3>
+  <p>La fonction <code>get_nom_epci()</code> dans <code>app.py</code> implémente :</p>
+  <ul>
+    <li><strong>Cache session</strong> — le résultat est stocké dans <code>st.session_state[f"epci_nom_{code}"]</code> pour éviter un appel API à chaque rerun Streamlit</li>
+    <li><strong>Timeout</strong> — 3 secondes maximum pour ne pas bloquer l'interface</li>
+    <li><strong>Fallback silencieux</strong> — en cas d'erreur réseau ou de code inconnu, le code brut est affiché sans message d'erreur</li>
+  </ul>
+
+  <pre><code>def get_nom_epci(code_epci: str) -> str:
+    cache_key = f"epci_nom_{code_epci}"
+    if cache_key in st.session_state:
+        return st.session_state[cache_key]
+    try:
+        r = requests.get(
+            f"https://geo.api.gouv.fr/epcis/{code_epci}",
+            timeout=3
+        )
+        if r.status_code == 200:
+            data = r.json()
+            nom = data.get("nom", code_epci)
+            type_epci = data.get("type", "")
+            result = f"{nom} ({type_epci})" if type_epci else nom
+        else:
+            result = code_epci
+    except Exception:
+        result = code_epci
+    st.session_state[cache_key] = result
+    return result</code></pre>
+</section>
+
+<!-- ══ SESSION STATE ══ -->
+<section id="session">
+  <div class="section-label">Documentation technique</div>
+  <h2>Session state — clés utilisées</h2>
+
+  <p>Toutes les données persistantes entre les reruns Streamlit transitent par <code>st.session_state</code>. Voici la liste complète des clés utilisées par l'application :</p>
+
+  <table>
+    <thead><tr><th>Clé</th><th>Type</th><th>Contenu</th><th>Producteur</th></tr></thead>
+    <tbody>
+      <tr><td><code>df</code></td><td><code>pd.DataFrame</code></td><td>BPE complète chargée</td><td><code>Lire_BPE.py</code></td></tr>
+      <tr><td><code>bpe_sel</code></td><td><code>pd.DataFrame</code></td><td>Sélection territoire courante</td><td><code>affiche_selecteur_bpe_2.py</code></td></tr>
+      <tr><td><code>bpe_mode</code></td><td><code>str</code></td><td><code>"Commune"</code> ou <code>"EPCI"</code></td><td><code>affiche_selecteur_bpe_2.py</code></td></tr>
+      <tr><td><code>bpe_territoire</code></td><td><code>str</code></td><td>Code commune ou EPCI sélectionné</td><td><code>affiche_selecteur_bpe_2.py</code></td></tr>
+      <tr><td><code>df_uu</code></td><td><code>pd.DataFrame</code></td><td>Fichier Unités urbaines</td><td><code>Lire_Zonages_INSEE.py</code></td></tr>
+      <tr><td><code>df_bv</code></td><td><code>pd.DataFrame</code></td><td>Fichier Bassins de vie</td><td><code>Lire_Zonages_INSEE.py</code></td></tr>
+      <tr><td><code>df_aav</code></td><td><code>pd.DataFrame</code></td><td>Fichier Aires d'attraction</td><td><code>Lire_Zonages_INSEE.py</code></td></tr>
+      <tr><td><code>page</code></td><td><code>str</code></td><td><code>"accueil"</code> ou <code>"bpe_signalement"</code></td><td><code>app.py</code></td></tr>
+      <tr><td><code>quitting</code></td><td><code>bool</code></td><td>Déclenchement sortie application</td><td><code>app.py</code></td></tr>
+      <tr><td><code>confirm_quit</code></td><td><code>bool</code></td><td>Affichage confirmation quitter</td><td><code>app.py</code></td></tr>
+      <tr><td><code>epci_nom_{code}</code></td><td><code>str</code></td><td>Cache nom EPCI (un par code)</td><td><code>app.py</code></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ PYINSTALLER ══ -->
+<section id="pyinstaller">
+  <div class="section-label">Documentation technique</div>
+  <h2>Distribution PyInstaller</h2>
+
+  <p>L'application peut être packagée en exécutable Windows autonome via PyInstaller, sans nécessiter d'installation Python sur le poste utilisateur.</p>
+
+  <h3>Mécanisme de résolution des chemins</h3>
+  <p>En mode PyInstaller, les fichiers sont extraits dans un dossier temporaire <code>_MEIPASS</code>. Le bloc suivant en tête de <code>app.py</code> résout automatiquement le chemin correct :</p>
+
+  <pre><code>_candidates = [
+    getattr(sys, '_MEIPASS', None),
+    os.path.dirname(os.path.abspath(__file__)),
+    os.path.dirname(sys.executable),
+    os.path.join(os.path.dirname(sys.executable), '_internal'),
+]
+for _p in _candidates:
+    if _p and os.path.isdir(os.path.join(_p, 'ui')) and _p not in sys.path:
+        sys.path.insert(0, _p)
+        break</code></pre>
+
+  <h3>Arrêt de l'application</h3>
+  <p>Le bouton <em>🚪 Quitter</em> déclenche <code>os._exit(0)</code> via un <code>Timer(2)</code> pour laisser le temps à Streamlit de rendre la page de sortie avant de tuer le processus.</p>
+
+  <div class="warn-box">
+    <strong>Attention :</strong> <code>os._exit(0)</code> est une sortie forcée qui ne déclenche pas les finaliseurs Python. C'est intentionnel pour couper proprement le serveur Streamlit intégré.
+  </div>
+</section>
+
+<!-- ══ COLONNES BPE ══ -->
+<section id="colonnes">
+  <div class="section-label">Référence</div>
+  <h2>Colonnes BPE — référence complète</h2>
+
+  <table>
+    <thead><tr><th>Colonne</th><th>Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>AN</code></td><td>int</td><td>Millésime de la BPE</td></tr>
+      <tr><td><code>DEPCOM</code></td><td>str(5)</td><td>Code commune INSEE (département + commune)</td></tr>
+      <tr><td><code>LIBCOM</code></td><td>str</td><td>Libellé de la commune</td></tr>
+      <tr><td><code>EPCI</code></td><td>str(9)</td><td>Code SIREN de l'EPCI</td></tr>
+      <tr><td><code>DEP</code></td><td>str(2-3)</td><td>Code département</td></tr>
+      <tr><td><code>REG</code></td><td>str(2)</td><td>Code région</td></tr>
+      <tr><td><code>DOM</code></td><td>str(1)</td><td>Domaine d'équipement (A à G)</td></tr>
+      <tr><td><code>SDOM</code></td><td>str(2)</td><td>Sous-domaine d'équipement</td></tr>
+      <tr><td><code>TYPEQU</code></td><td>str(4)</td><td>Type d'équipement (code nomenclature BPE)</td></tr>
+      <tr><td><code>NOMRS</code></td><td>str</td><td>Nom ou raison sociale de l'équipement</td></tr>
+      <tr><td><code>CNOMRS</code></td><td>str</td><td>Complément du nom</td></tr>
+      <tr><td><code>TYPVOIE</code></td><td>str</td><td>Type de voie (RUE, AV, BD…)</td></tr>
+      <tr><td><code>LIBVOIE</code></td><td>str</td><td>Libellé de la voie</td></tr>
+      <tr><td><code>CADR</code></td><td>str</td><td>Complément d'adresse</td></tr>
+      <tr><td><code>CODPOS</code></td><td>str(5)</td><td>Code postal</td></tr>
+      <tr><td><code>LONGITUDE</code></td><td>float</td><td>Longitude WGS84</td></tr>
+      <tr><td><code>LATITUDE</code></td><td>float</td><td>Latitude WGS84</td></tr>
+      <tr><td><code>BV2022</code></td><td>str</td><td>Code bassin de vie 2022</td></tr>
+      <tr><td><code>AAV2020</code></td><td>str</td><td>Code aire d'attraction des villes 2020</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section id="faq">
+  <div class="section-label">Référence</div>
+  <h2>Questions fréquentes</h2>
+
+  <h3>Le nom de l'EPCI ne s'affiche pas</h3>
+  <p>L'application a besoin d'une connexion Internet pour interroger l'API geo.api.gouv.fr. En cas d'indisponibilité, le code EPCI brut est affiché à la place — le reste de l'application fonctionne normalement.</p>
+
+  <h3>Les zonages INSEE ne s'affichent pas après chargement</h3>
+  <p>Vérifier que les colonnes <code>BV2022</code> et <code>AAV2020</code> sont présentes dans votre fichier BPE. Ces colonnes sont disponibles dans la BPE à partir du millésime 2022. Pour les unités urbaines, la jointure se fait via <code>CODGEO</code> ↔ <code>DEPCOM</code>.</p>
+
+  <h3>Le fichier BPE est trop volumineux à charger</h3>
+  <p>Il est possible de pré-filtrer le fichier CSV sur un ou plusieurs départements avant import pour réduire le temps de chargement. L'application n'impose pas de limite de taille.</p>
+
+  <h3>Le formulaire de signalement ne génère pas de PDF</h3>
+  <p>Vérifier que tous les champs obligatoires (marqués <code>*</code>) sont remplis. Le bouton de génération PDF est désactivé tant que le formulaire est incomplet.</p>
+
+  <h3>L'application plante au démarrage avec PyInstaller</h3>
+  <p>Vérifier que le dossier <code>ui/</code> et ses fichiers sont bien inclus dans le build PyInstaller via l'option <code>--add-data</code>. Le bloc de résolution de chemin en tête de <code>app.py</code> gère plusieurs stratégies de fallback.</p>
+
+  <h3>Un équipement de mon territoire est absent de la BPE</h3>
+  <p>Utiliser le module <strong>📋 Signaler une anomalie BPE</strong> accessible depuis la barre latérale. Pour les équipements sportifs, le signalement doit être adressé à l'INJEP via le Recensement des Équipements Sportifs (RES) sur <a href="https://res.injep.fr" target="_blank">res.injep.fr</a>.</p>
+</section>
+
+</div><!-- .content -->
+</main>
+
+<footer>
+  Tableau de bord BPE 2026 · Version 1.0.0 · Philippe PETIT ·
+  <a href="mailto:philippe.petit.lafiou@outlook.fr">philippe.petit.lafiou@outlook.fr</a>
+</footer>
+
+<script>
+  // Highlight nav active link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
