@@ -20,7 +20,6 @@ for _p in _candidates:
 import streamlit as st
 import pandas as pd
 import requests
-import os
 from pathlib import Path
 
 ROOT_DIR = Path(__file__).resolve().parent
@@ -185,11 +184,10 @@ with st.sidebar:
     st.markdown(f"[🗺️ Télécharger les données depuis data.gouv.fr]({url_maps})")
     st.divider()
 
-    with st.expander("📁 Import des données (cliquer pour afficher/masquer)"):
-        st.header("📂 Import des données")
-        df = lire_bpe()
-        if df is not None:
-            st.session_state["df"] = df
+    st.header("📂 Import des données")
+    df = lire_bpe()
+    if df is not None:
+        st.session_state["df"] = df
 
     if "df" in st.session_state:
         df = st.session_state["df"]
